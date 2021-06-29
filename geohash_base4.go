@@ -93,6 +93,7 @@ func (b *Box) Height() float64 {
 	return b.MaxLat - b.MinLat
 }
 
+// 只留作记录 并不能很好的保证准确性
 // 输入值：纬度，经度，精度(geohash的长度)
 // 返回geoHash, 以及该点所在的区域
 func EncodeBase4(latitude, longitude float64, precision int) (string, *Box, error) {
