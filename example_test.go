@@ -3,7 +3,7 @@ package geohash_test
 import (
 	"fmt"
 
-	"github.com/mmcloughlin/geohash"
+	"github.com/gsp412/geohash"
 )
 
 func Example() {
@@ -34,8 +34,42 @@ func Example() {
 }
 
 func ExampleEncode() {
-	fmt.Println(geohash.Encode(48.858, 2.294))
-	// Output: u09tunq6qp66
+	fmt.Println(geohash.EncodeWithPrecision(40.088046, 116.604412, 12))
+	fmt.Println(geohash.EncodeWithPrecision(39.902783, 116.48455, 12))
+	// Output: wx4uj3u9z9rm
+	//wx4g48j6w9zu
+}
+
+func ExampleEncodeBase32() {
+	hash, _, _ := geohash.EncodeBase32(40.088046, 116.604412, 12)
+	hash2, _, _ := geohash.EncodeBase32(39.902783, 116.48455, 12)
+	fmt.Println(hash)
+	fmt.Println(hash2)
+	// Output: wx4uj3u9z9rm
+	//wx4g48j6w9zu
+}
+
+func ExampleEncodeBase4() {
+	hash, _, _ := geohash.EncodeBase4(40.088046, 116.604412, 32)
+	hash2, _, _ := geohash.EncodeBase4(39.902783, 116.48455, 32)
+	fmt.Println(hash)
+	fmt.Println(hash2)
+	// Output: 32131021222020331021332212330320
+	//32131020330202020212320213332202
+}
+
+func ExampleDecodeBase4() {
+	lat1, lng1, _ := geohash.DecodeBase4("32131021222020331021332212330320")
+	lat2, lng2, _ := geohash.DecodeBase4("32131020330202020212320213332202")
+	fmt.Printf("lat1: %.6f \t lng1: %.6f\n", lat1, lng1)
+	fmt.Printf("lat2: %.6f \t lng2: %.6f\n", lat2, lng2)
+	// Output: lat1: 40.088046 	 lng1: 116.604412
+	//lat2: 39.902783 	 lng2: 116.484550
+}
+func ExampleDistanceBase4() {
+	distance := geohash.DistanceBase4("32131021222020331021332212330320", "32131020330202020212320213332202")
+	fmt.Printf("distinct: %f", distance)
+	// Output: distinct: 22990
 }
 
 func ExampleEncodeInt() {

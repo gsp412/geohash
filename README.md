@@ -13,13 +13,13 @@ and decoding for string and integer geohashes.
 Fetch the package with
 
 ```
-go get github.com/mmcloughlin/geohash
+go get github.com/gsp412/geohash
 ```
 
 And import it into your programs with
 
 ```go
-import "github.com/mmcloughlin/geohash"
+import "github.com/gsp412/geohash"
 ```
 
 ## Usage

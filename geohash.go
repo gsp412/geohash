@@ -57,6 +57,10 @@ func EncodeIntWithPrecision(lat, lng float64, bits uint) uint64 {
 	return hash >> (64 - bits)
 }
 
+// geohash的精度与其长度成正比
+// 每个点的geohash值实际上代表了一个区域，这个区域的大小与geohash的精度成反比
+// 坐标点的格式为（纬度，经度）
+// 将这个区域用一个矩形表示
 // Box represents a rectangle in latitude/longitude space.
 type Box struct {
 	MinLat float64
@@ -75,8 +79,8 @@ func (b Box) Center() (lat, lng float64) {
 // Contains decides whether (lat, lng) is contained in the box. The
 // containment test is inclusive of the edges and corners.
 func (b Box) Contains(lat, lng float64) bool {
-	return (b.MinLat <= lat && lat <= b.MaxLat &&
-		b.MinLng <= lng && lng <= b.MaxLng)
+	return b.MinLat <= lat && lat <= b.MaxLat &&
+		b.MinLng <= lng && lng <= b.MaxLng
 }
 
 // minDecimalPlaces returns the minimum number of decimal places such that
@@ -254,7 +258,7 @@ func NeighborsIntWithPrecision(hash uint64, bits uint) []uint64 {
 	}
 }
 
-// Neighbor returns a geohash string that corresponds to the provided 
+// Neighbor returns a geohash string that corresponds to the provided
 // geohash's neighbor in the provided direction
 func Neighbor(hash string, direction Direction) string {
 	return Neighbors(hash)[direction]
